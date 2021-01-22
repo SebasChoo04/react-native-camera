@@ -5,7 +5,8 @@ import { Camera } from 'expo-camera';
 export default function CameraScreen({ navigation }) {
 
   const [hasPermission, setHasPermission] = useState(null); 
-  const [type, setType] = useState(Camera.Constants.Type.back);
+  const [back, setBack] = useState(true)
+
   const cameraRef = useRef(null)
 
   async function showCamera() {
@@ -19,10 +20,10 @@ export default function CameraScreen({ navigation }) {
 
   useEffect(() => {
     showCamera()
-  })
+  }, [])
 
   function flip() {
-    setType(type === Camera.Constants.Type.back ? Camera.Constants.Type.front : Camera.Constants.Type.back);
+    setBack(!back);
   }
 
   async function takePicture() {
@@ -34,7 +35,7 @@ export default function CameraScreen({ navigation }) {
 
   return (
     <View style={{flex: 1}}>
-    <Camera style={styles.camera} type={type} ref={cameraRef}>
+      <Camera style={styles.camera} type={back ? Camera.Constants.Type.back : Camera.Constants.Type.front} ref={cameraRef}>
         <TouchableOpacity style={styles.button} onPress={() => flip()}>
           <Text style={styles.text}> Flip </Text>
         </TouchableOpacity>
@@ -43,9 +44,10 @@ export default function CameraScreen({ navigation }) {
             <TouchableOpacity onPress={() => takePicture()} style={styles.circleButton}/>
           </View>
         </View>
-    </Camera>
-  </View>
-  )}
+      </Camera>
+    </View>
+  )
+}
 
   const styles = StyleSheet.create({
     camera: {

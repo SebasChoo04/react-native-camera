@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, StyleSheet, Animated, Dimensions } from 'react-native';
+import { View, StyleSheet, Animated, Dimensions, Image } from 'react-native';
 
 const SCREEN_WIDTH = Dimensions.get('screen').width;
 const SCREEN_HEIGHT = Dimensions.get('screen').height;
@@ -7,6 +7,7 @@ const SCREEN_HEIGHT = Dimensions.get('screen').height;
 export default function PhotoScreen({ route }) {
 
   let position = new Animated.ValueXY({x: SCREEN_WIDTH / 2 - 150, y: -SCREEN_WIDTH})
+
   const { image } = route.params;
 
   useEffect(() => {
@@ -17,6 +18,8 @@ export default function PhotoScreen({ route }) {
         tension: 10,
         useNativeDriver: false
       }).start()
+
+      console.log(image)
   }, [])
 
   return (
